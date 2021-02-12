@@ -83,7 +83,7 @@ var func = function (id, game) {
             (_b = (_a = game === null || game === void 0 ? void 0 : game.currTeam) === null || _a === void 0 ? void 0 : _a.currPlayer) === null || _b === void 0 ? void 0 : _b.hit();
             if (((_d = (_c = game === null || game === void 0 ? void 0 : game.currTeam) === null || _c === void 0 ? void 0 : _c.currPlayer) === null || _d === void 0 ? void 0 : _d.net_score) != undefined) {
                 team1score_1 += (_f = (_e = game === null || game === void 0 ? void 0 : game.currTeam) === null || _e === void 0 ? void 0 : _e.currPlayer) === null || _f === void 0 ? void 0 : _f.net_score;
-                p_1.innerText = "Team0 score: " + team1score_1;
+                p_1.innerText = "Team1 score: " + team1score_1;
             }
             else {
                 game.currTeam.team_score = team1score_1;
@@ -96,13 +96,13 @@ var func = function (id, game) {
                 }
                 else {
                     if (game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score != 0) {
-                        alert("Team" + game.currTeam.id + " is the winner");
+                        alert("Team" + (game.currTeam.id + 1) + " is the winner");
                         if (confirm('Ok')) {
                             window.location.href = "index.html";
                         }
                     }
                     else if (game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score != 0) {
-                        alert("Team" + game.oppTeam.id + " is the winner");
+                        alert("Team" + (game.oppTeam.id + 1) + " is the winner");
                         if (confirm('Ok')) {
                             window.location.href = "index.html";
                         }
@@ -131,7 +131,7 @@ var func = function (id, game) {
             (_b = (_a = game === null || game === void 0 ? void 0 : game.currTeam) === null || _a === void 0 ? void 0 : _a.currPlayer) === null || _b === void 0 ? void 0 : _b.hit();
             if (((_d = (_c = game === null || game === void 0 ? void 0 : game.currTeam) === null || _c === void 0 ? void 0 : _c.currPlayer) === null || _d === void 0 ? void 0 : _d.net_score) != undefined) {
                 team2score_1 += (_f = (_e = game === null || game === void 0 ? void 0 : game.currTeam) === null || _e === void 0 ? void 0 : _e.currPlayer) === null || _f === void 0 ? void 0 : _f.net_score;
-                p_2.innerText = "Team1 score: " + team2score_1;
+                p_2.innerText = "Team2 score: " + team2score_1;
             }
             else {
                 game.currTeam.team_score = team2score_1;
@@ -144,13 +144,13 @@ var func = function (id, game) {
                 }
                 else {
                     if (game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score != 0) {
-                        alert("Team" + game.currTeam.id + " is the winner");
+                        alert("Team" + (game.currTeam.id + 1) + " is the winner");
                         if (confirm('Reset your game')) {
                             window.location.href = "index.html";
                         }
                     }
                     else if (game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score != 0) {
-                        alert("Team" + game.oppTeam.id + " is the winner");
+                        alert("Team" + (game.oppTeam.id + 1) + " is the winner");
                         if (confirm('Ok')) {
                             window.location.href = "index.html";
                         }

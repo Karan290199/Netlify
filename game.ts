@@ -91,7 +91,7 @@ let func = (id: number,game: Game) => {
             game?.currTeam?.currPlayer?.hit();
             if(game?.currTeam?.currPlayer?.net_score != undefined){
                 team1score += game?.currTeam?.currPlayer?.net_score;
-                p.innerText = `Team0 score: ${team1score}`;
+                p.innerText = `Team1 score: ${team1score}`;
             }
             else{
                 game.currTeam.team_score = team1score;
@@ -104,13 +104,13 @@ let func = (id: number,game: Game) => {
                 }
                 else{
                     if(game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score !=0){
-                        alert(`Team${game.currTeam.id} is the winner`);
+                        alert(`Team${game.currTeam.id + 1} is the winner`);
                         if(confirm('Ok')){
                             window.location.href = "index.html"
                         }
                     }
                     else if(game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score !=0){
-                        alert(`Team${game.oppTeam.id} is the winner`);
+                        alert(`Team${game.oppTeam.id + 1} is the winner`);
                         if(confirm('Ok')){
                             window.location.href = "index.html"
                         }
@@ -139,7 +139,7 @@ let func = (id: number,game: Game) => {
             game?.currTeam?.currPlayer?.hit();
             if(game?.currTeam?.currPlayer?.net_score != undefined){
                 team2score += game?.currTeam?.currPlayer?.net_score;
-                p.innerText = `Team1 score: ${team2score}`;
+                p.innerText = `Team2 score: ${team2score}`;
             }
             else{
                 game.currTeam.team_score = team2score;
@@ -152,13 +152,13 @@ let func = (id: number,game: Game) => {
                 }
                 else{
                     if(game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score !=0 ){
-                        alert(`Team${game.currTeam.id} is the winner`);
+                        alert(`Team${game.currTeam.id + 1} is the winner`);
                         if(confirm('Reset your game')){
                             window.location.href = "index.html"
                         }
                     }
                     else if(game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score !=0){
-                        alert(`Team${game.oppTeam.id} is the winner`);
+                        alert(`Team${game.oppTeam.id + 1} is the winner`);
                         if(confirm('Ok')){
                             window.location.href = "index.html"
                         }
