@@ -24,6 +24,7 @@ class Team {
     players: Array<Player> = [];
     currPlayer: Player;
     nxtPlayers: Player;
+    wickets: number = 0;
     constructor(id: number) {
         this.id = id;
         for (let i = 0; i < 10; i++) {
@@ -55,13 +56,24 @@ class Player {
             l += ranRun;
         }
         else if (ranRun === 0 || this.balls_faced >= 6) {
+            team.wickets++;
             team.getnext();
+
         }
         this.net_score = l;
         team.team_score += l;
     }
 }
 
+
+class Timer {
+    constructor(public counter = 60) {
+        let intervalId = setInterval(() => {
+            this.counter = this.counter - 1;
+            if (this.counter === 0) clearInterval(intervalId)
+        }, 1000)
+    }
+}
 
 let game;
 let button = document.getElementById('Create');
@@ -71,109 +83,115 @@ let hit2 = document.getElementById('hit2');
 hit1.style.display = "none";
 hit2.style.display = "none";
 
-button.addEventListener ("click", res) 
-function res(){
+let cardTitle1 = document.getElementById("card-title1");
+let cardText1 = document.getElementById("card-text1");
+let cardTitle2 = document.getElementById("card-title2");
+let cardText2 = document.getElementById("card-text2");
+let container = document.getElementById("container")
+container.style.display = "none";
+
+button.addEventListener("click", res)
+function res() {
     let id = Math.floor(Math.random() * 2) + 1;
     button.style.display = "none";
     game = new Game(id);
-    func(id,game);
+    container.style.display = "block";
+    func(id, game);
 };
 
-let func = (id: number,game: Game) => {
+
+let func = (id: number, game: Game) => {
+    hit1.style.display = "none";
+    hit2.style.display = "none";
     if (id === 1) {
         hit1.style.display = "block";
         hit2.style.display = "none";
+        cardTitle1.innerText = "Team1";
         let team1score = 0;
-        let mydiv = document.createElement("div");
-        let p = document.createElement("p");
-        mydiv.setAttribute('id', 'div1');
         hit1.onclick = function myfunct() {
             game?.currTeam?.currPlayer?.hit();
-            if(game?.currTeam?.currPlayer?.net_score != undefined){
+            if (game?.currTeam?.currPlayer?.net_score != undefined) {
                 team1score += game?.currTeam?.currPlayer?.net_score;
-                p.innerText = `Team1 score: ${team1score}`;
+                cardText1.innerText = `Team1 scores ${team1score} Runs / ${game?.currTeam?.wickets}`;
             }
-            else{
+            else if (game?.currTeam?.currPlayer?.net_score === undefined || game?.currTeam?.wickets === 10) {
+                hit1.style.display = "none";
+                hit2.style.display = "none";
                 game.currTeam.team_score = team1score;
                 let temp = game.currTeam;
                 game.currTeam = game.oppTeam;
                 game.oppTeam = temp;
-                console.log(game.currTeam,temp);
-                if(game.currTeam.team_score === 0){
-                    func(temp.id+2,game);
+                console.log(game.currTeam, temp);
+                if (game.currTeam.team_score === 0) {
+                    func(temp.id + 2, game);
                 }
-                else{
-                    if(game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score !=0){
+                else {
+                    if (game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score != 0) {
                         alert(`Team${game.currTeam.id + 1} is the winner`);
-                        if(confirm('Ok')){
+                        if (confirm('Reset your game')) {
                             window.location.href = "index.html"
                         }
                     }
-                    else if(game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score !=0){
+                    else if (game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score != 0) {
                         alert(`Team${game.oppTeam.id + 1} is the winner`);
-                        if(confirm('Ok')){
+                        if (confirm('Reset your game')) {
                             window.location.href = "index.html"
                         }
                     }
-                    else{
+                    else {
                         alert(`match is Draw`);
-                        if(confirm('Ok')){
+                        if (confirm('Reset your game')) {
                             window.location.href = "index.html"
                         }
                     }
                 }
             }
         }
-        mydiv.append(p);
-        document.body.appendChild(mydiv);
-
     }
-    else if(id === 2){
+    else if (id === 2) {
         hit2.style.display = "block";
         hit1.style.display = "none";
+        cardTitle2.innerText = "Team2";
         let team2score = 0;
-        let mydiv = document.createElement("div");
-        let p = document.createElement("p");
-        mydiv.setAttribute('id', 'main');
         hit2.onclick = function myfunct() {
             game?.currTeam?.currPlayer?.hit();
-            if(game?.currTeam?.currPlayer?.net_score != undefined){
+            if (game?.currTeam?.currPlayer?.net_score != undefined) {
                 team2score += game?.currTeam?.currPlayer?.net_score;
-                p.innerText = `Team2 score: ${team2score}`;
+                cardText2.innerText = `Team2 scores ${team2score} Runs / ${game?.currTeam?.wickets}`;
             }
-            else{
+            else if (game?.currTeam?.currPlayer?.net_score === undefined || game?.currTeam?.wickets === 10) {
+                hit1.style.display = "none";
+                hit2.style.display = "none";
                 game.currTeam.team_score = team2score;
                 let temp = game.currTeam;
                 game.currTeam = game.oppTeam;
                 game.oppTeam = temp;
-                console.log(game.currTeam,temp);
-                if(game.currTeam.team_score === 0){
-                    func(temp.id,game);
+                console.log(game.currTeam, temp);
+                if (game.currTeam.team_score === 0) {
+                    func(temp.id, game);
                 }
-                else{
-                    if(game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score !=0 ){
+                else {
+                    if (game.currTeam.team_score > game.oppTeam.team_score && game.oppTeam.team_score != 0) {
                         alert(`Team${game.currTeam.id + 1} is the winner`);
-                        if(confirm('Reset your game')){
+                        if (confirm('Reset your game')) {
                             window.location.href = "index.html"
                         }
                     }
-                    else if(game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score !=0){
+                    else if (game.currTeam.team_score < game.oppTeam.team_score && game.oppTeam.team_score != 0) {
                         alert(`Team${game.oppTeam.id + 1} is the winner`);
-                        if(confirm('Ok')){
+                        if (confirm('Reset your game')) {
                             window.location.href = "index.html"
                         }
                     }
-                    else{
+                    else {
                         alert(`match is Draw`);
-                        if(confirm('Ok')){
+                        if (confirm('Reset your game')) {
                             window.location.href = "index.html"
                         }
                     }
                 }
             }
         }
-        mydiv.append(p)
-        document.body.appendChild(mydiv);
     }
 }
 

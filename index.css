@@ -1,9 +1,28 @@
-#Create{
-    
+#Create{   
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+
+#hit1{
+  margin: 50px;
+  padding: 50px;
+}
+
+#hit2{
+  margin: 50px;
+  padding: 50px;
+}
+
+#container{
+  display: flex;
+}
+
+#container div{
+  -ms-flex: 1;
+  flex: 1;
 }
